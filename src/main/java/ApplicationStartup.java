@@ -8,13 +8,15 @@ import static models.ProductType.SOAP;
 
 public class ApplicationStartup {
     public static void main(String[] args) {
-        BigDecimal price = new BigDecimal("39.99");
-        Product dove = new Product("Dove Soap", price, SOAP);
-        int quantity = 5;
+        BigDecimal unitPrice = new BigDecimal("39.99");
+        Product dove = new Product("Dove Soap", unitPrice, SOAP);
+        int fiveQuantity = 5;
+        int threeQuantity = 3;
 
         ShoppingCart cart = new ShoppingCart();
         User user = new User(cart);
 
-        user.addProductToCart(dove, quantity);
+        user.addProductToCart(dove, fiveQuantity);
+        user.addProductToCart(dove, threeQuantity);
     }
 }
