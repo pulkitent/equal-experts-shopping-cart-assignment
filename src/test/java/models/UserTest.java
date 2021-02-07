@@ -1,5 +1,6 @@
 package models;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,29 +11,69 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class UserTest {
-    @Test
-    @DisplayName("Should assert two shopping cart with 5 dove soaps and same unit price")
-    void shouldAddProductToCartByUser() {
+
+    private int fiveQuantity;
+    private Product doveSoap;
+    private ShoppingCart actualCart;
+    private User user;
+    private ShoppingCart expectedShoppingCartWithFiveDove;
+
+    @BeforeEach
+    void setup() {
         // Arrange
-        int quantity = 5;
-        String productName = "Dove Soap";
-        String unitPrice = "39.99";
+        fiveQuantity = 5;
+        String doveProductName = "Dove Soap";
+        String doveUnitPrice = "39.99";
 
-        BigDecimal price = new BigDecimal(unitPrice);
-        Product doveSoap = new Product(productName, price, SOAP);
-        ShoppingCart cart = new ShoppingCart();
-        User user = new User(cart);
+        BigDecimal price = new BigDecimal(doveUnitPrice);
+        doveSoap = new Product(doveProductName, price, SOAP);
+        actualCart = new ShoppingCart();
+        user = new User(actualCart);
 
-        ShoppingCart expectedShoppingCart = getExpectedCart(productName, quantity, unitPrice);
+        expectedShoppingCartWithFiveDove = getExpectedCart(doveProductName, fiveQuantity, doveUnitPrice);
+    }
+
+    @BeforeEach
+    void tearDown() {
+        fiveQuantity = 0;
+        doveSoap = null;
+        actualCart = null;
+        user = null;
+        expectedShoppingCartWithFiveDove = null;
+    }
+
+    @Test
+    @DisplayName("Should assert two shopping cart with 5 dove soaps with same unit price and same total price")
+    void shouldAddFiveDoveSoapsToCartByUser() {
+        //Arrange
         BigDecimal expectedTotalCartPrice = new BigDecimal("199.95");
 
         // Action
-        user.addProductToCart(doveSoap, quantity);
+        user.addProductToCart(doveSoap, fiveQuantity);
 
         // Assert
-        assertThat(cart.getTotalPrice(), is(expectedTotalCartPrice));
+        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
         /* verifies cart has 5 dove soaps with unit price 39.99 each by using equals and hashcode contract*/
-        assertThat(cart, is(expectedShoppingCart));
+        assertThat(actualCart, is(expectedShoppingCartWithFiveDove));
+    }
+
+    @Test
+    @DisplayName("Should assert two shopping cart with 8 dove soaps and same unit price and same total price")
+    void shouldAddFiveAndThreeDoveSoapsToCartByUser() {
+        // Arrange
+        int threeQuantity = 3;
+        BigDecimal expectedTotalCartPrice = new BigDecimal("319.92");
+        expectedShoppingCartWithFiveDove.addProduct(doveSoap, threeQuantity);
+        ShoppingCart expectedShoppingCartWithEightDove = expectedShoppingCartWithFiveDove;
+
+        // Action
+        user.addProductToCart(doveSoap, fiveQuantity);
+        user.addProductToCart(doveSoap, threeQuantity);
+
+        // Assert
+        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
+        /* verifies cart has 8 dove soaps with unit price 39.99 each by using equals and hashcode contract */
+        assertThat(actualCart, is(expectedShoppingCartWithEightDove));
     }
 
     private ShoppingCart getExpectedCart(String name, int quantity, String unitPrice) {

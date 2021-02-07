@@ -39,6 +39,9 @@ public class ShoppingCart {
     }
 
     private void calculateTotalPrice() {
+        //Reset cart total value
+        this.totalPrice = new BigDecimal("0.0");
+
         for (Product product : products) {
             BigDecimal unitPrice = product.getUnitPrice();
             totalPrice = totalPrice.add(unitPrice);
