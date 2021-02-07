@@ -12,66 +12,95 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class ShoppingCartTest {
-    private int quantity;
-    private String productName;
-    private String unitPrice;
-    private BigDecimal price;
+    private int fiveQuantity;
+    private String doveProductName;
+    private String doveUnitPrice;
+    private BigDecimal dovePrice;
     private Product doveSoap;
-    private ShoppingCart cart;
-    private ShoppingCart expectedShoppingCart;
-    private BigDecimal expectedTotalCartPrice;
+    private ShoppingCart actualCart;
+    private ShoppingCart expectedShoppingCartWithFiveDove;
 
     @BeforeEach
     void setup() {
-        quantity = 5;
-        productName = "Dove Soap";
-        unitPrice = "39.99";
+        fiveQuantity = 5;
+        doveProductName = "Dove Soap";
+        doveUnitPrice = "39.99";
 
-        price = new BigDecimal(unitPrice);
-        doveSoap = new Product(productName, price, SOAP);
-        cart = new ShoppingCart();
-        cart.addProduct(doveSoap, quantity);
+        dovePrice = new BigDecimal(doveUnitPrice);
+        doveSoap = new Product(doveProductName, dovePrice, SOAP);
+        actualCart = new ShoppingCart();
 
-        expectedShoppingCart = getShoppingCart(productName, quantity, unitPrice);
-        expectedTotalCartPrice = new BigDecimal("199.95");
+        expectedShoppingCartWithFiveDove = getShoppingCart(doveProductName, fiveQuantity, doveUnitPrice);
     }
 
     @AfterEach
     void tearDown() {
-        quantity = 0;
-        productName = null;
-        unitPrice = null;
+        fiveQuantity = 0;
+        doveProductName = null;
+        doveUnitPrice = null;
 
-        price = null;
+        dovePrice = null;
         doveSoap = null;
-        cart = null;
+        actualCart = null;
 
-        expectedShoppingCart = null;
-        expectedTotalCartPrice = null;
+        expectedShoppingCartWithFiveDove = null;
     }
 
     @Test
-    @DisplayName("Should assert two shopping cart with 5 dove soaps and same unit price")
-    void shouldAddProductToCart() {
+    @DisplayName("Should assert two shopping cart with 5 dove soaps with same unit price and same total cart price")
+    void shouldAddFiveDoveSoapProductsToACart() {
+        //Arrange
+        BigDecimal expectedTotalCartPrice = new BigDecimal("199.95");
+
+        //Action
+        actualCart.addProduct(doveSoap, fiveQuantity);
+
         // Assert
         /* verifies cart has 5 dove soaps with unit price 39.99 each by using equals and hashcode contract*/
-        assertThat(cart, is(expectedShoppingCart));
-        assertThat(cart.getTotalPrice(), is(expectedTotalCartPrice));
+        assertThat(actualCart, is(expectedShoppingCartWithFiveDove));
+        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
+    }
 
+    @Test
+    @DisplayName("Should assert two shopping cart with 8 dove soaps with same unit price and same total cart price")
+    void shouldAddFiveAndEightDoveProductsToACart() {
+        //Arrange
+        int threeQuantity = 3;
+        expectedShoppingCartWithFiveDove.addProduct(doveSoap, threeQuantity);
+        ShoppingCart expectedShoppingCartWithEightDove = expectedShoppingCartWithFiveDove;
+        BigDecimal expectedTotalCartPrice = new BigDecimal("319.92");
+
+        //Action
+        actualCart.addProduct(doveSoap, fiveQuantity);
+        actualCart.addProduct(doveSoap, threeQuantity);
+
+        // Assert
+        /* verifies cart has 8 dove soaps with unit price 39.99 each by using equals and hashcode contract*/
+        assertThat(actualCart, is(expectedShoppingCartWithEightDove));
+        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
     }
 
     @Test
     @DisplayName("Should check equality of two equal carts")
     void shouldTestEquals() {
+        //Action
+        actualCart.addProduct(doveSoap, fiveQuantity);
+
         //Assert
-        assertThat(cart.equals(expectedShoppingCart), is(true));
+        assertThat(actualCart.equals(expectedShoppingCartWithFiveDove), is(true));
     }
 
     @Test
     @DisplayName("Should check total price of a cart")
     void shouldGetTotalPrice() {
+        //Arrange
+        BigDecimal expectedTotalCartPrice = new BigDecimal("199.95");
+
+        //Action
+        actualCart.addProduct(doveSoap, fiveQuantity);
+
         //Assert
-        assertThat(cart.getTotalPrice(), is(expectedTotalCartPrice));
+        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
     }
 
     private ShoppingCart getShoppingCart(String name, int quantity, String unitPrice) {
