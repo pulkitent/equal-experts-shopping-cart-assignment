@@ -10,4 +10,8 @@ public class Tax {
         this.type = type;
         this.taxPercentage = taxPercentage;
     }
+
+    public BigDecimal getTaxPercentage() {
+        return taxPercentage;
+    }
 }

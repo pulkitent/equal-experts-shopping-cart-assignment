@@ -52,7 +52,7 @@ class ShoppingCartTest {
     @DisplayName("Should assert two shopping cart with 5 dove soaps with same unit price and same total cart price")
     void shouldAddFiveDoveSoapProductsToACart() {
         //Arrange
-        BigDecimal expectedTotalCartPrice = new BigDecimal("199.95");
+        BigDecimal expectedTotalCartPrice = new BigDecimal("224.94");
 
         //Action
         actualCart.addProduct(doveSoap, fiveQuantity);
@@ -70,7 +70,7 @@ class ShoppingCartTest {
         int threeQuantity = 3;
         expectedShoppingCartWithFiveDove.addProduct(doveSoap, threeQuantity);
         ShoppingCart expectedShoppingCartWithEightDove = expectedShoppingCartWithFiveDove;
-        BigDecimal expectedTotalCartPrice = new BigDecimal("319.92");
+        BigDecimal expectedTotalCartPrice = new BigDecimal("359.91");
 
         //Action
         actualCart.addProduct(doveSoap, fiveQuantity);
@@ -96,7 +96,7 @@ class ShoppingCartTest {
     @DisplayName("Should check total price of a cart")
     void shouldGetTotalPrice() {
         //Arrange
-        BigDecimal expectedTotalCartPrice = new BigDecimal("199.95");
+        BigDecimal expectedTotalCartPrice = new BigDecimal("224.94");
 
         //Action
         actualCart.addProduct(doveSoap, fiveQuantity);

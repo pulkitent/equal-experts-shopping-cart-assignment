@@ -32,4 +32,8 @@ public class Product {
     BigDecimal getUnitPrice() {
         return price.getUnitPrice();
     }
+
+    BigDecimal getProductPriceWithTax() {
+        return this.price.getPriceWithTax();
+    }
 }

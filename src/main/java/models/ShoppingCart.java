@@ -5,9 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import static java.math.BigDecimal.ROUND_HALF_UP;
+
 public class ShoppingCart {
     private final List<Product> products;
     private BigDecimal totalPrice;
+
+    private static final Integer PRECISION = 2;
 
     public ShoppingCart() {
         this.products = new LinkedList<>();
@@ -39,12 +43,14 @@ public class ShoppingCart {
     }
 
     private void calculateTotalPrice() {
-        //Reset cart total value
+        //Reset cart total value every time to calculate total value from start
         this.totalPrice = new BigDecimal("0.0");
 
         for (Product product : products) {
-            BigDecimal unitPrice = product.getUnitPrice();
-            totalPrice = totalPrice.add(unitPrice);
+            BigDecimal priceWithTax = product.getProductPriceWithTax();
+            totalPrice = totalPrice.add(priceWithTax);
         }
+
+        this.totalPrice = totalPrice.setScale(PRECISION, ROUND_HALF_UP);
     }
 }
