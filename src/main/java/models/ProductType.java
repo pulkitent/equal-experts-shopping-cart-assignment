@@ -1,5 +1,5 @@
 package models;
 
 public enum ProductType {
-    SOAP
+    SOAP, DEO
 }

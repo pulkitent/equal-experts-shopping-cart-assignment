@@ -8,21 +8,31 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static models.ProductType.SOAP;
+import static models.TaxType.SALES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class ProductTest {
     private String productName;
     private BigDecimal unitPrice;
+    private BigDecimal salesPercentage;
+    private Tax salesTax;
+    private Price price;
     private Product actualProduct;
     private Product expectedProduct;
 
     @BeforeEach
     void setup() {
+        salesPercentage = new BigDecimal("12.5");
+
+        salesTax = new Tax(SALES, salesPercentage);
+        unitPrice = new BigDecimal("39.99");
+
+        price = new Price(unitPrice, salesTax);
         productName = "Dove Soap";
-        unitPrice = new BigDecimal("35.5");
-        actualProduct = new Product(productName, unitPrice, SOAP);
-        expectedProduct = new Product(productName, unitPrice, SOAP);
+
+        actualProduct = new Product(productName, price, SOAP);
+        expectedProduct = new Product(productName, price, SOAP);
     }
 
     @AfterEach
@@ -31,6 +41,9 @@ class ProductTest {
         unitPrice = null;
         actualProduct = null;
         expectedProduct = null;
+        salesPercentage = null;
+        salesTax = null;
+        price = null;
     }
 
     @Test
@@ -44,7 +57,7 @@ class ProductTest {
     @DisplayName("Should check getUnitPrice of a product")
     void shouldGetUnitPrice() {
         //Arrange
-        BigDecimal expectedUnitPrice = new BigDecimal("35.5");
+        BigDecimal expectedUnitPrice = new BigDecimal("39.99");
 
         //Assert
         assertThat(actualProduct.getUnitPrice(), is(expectedUnitPrice));

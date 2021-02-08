@@ -8,15 +8,15 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static models.ProductType.SOAP;
+import static models.TaxType.SALES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class ShoppingCartTest {
     private int fiveQuantity;
     private String doveProductName;
-    private String doveUnitPrice;
-    private BigDecimal dovePrice;
     private Product doveSoap;
+    private Price price;
     private ShoppingCart actualCart;
     private ShoppingCart expectedShoppingCartWithFiveDove;
 
@@ -24,25 +24,27 @@ class ShoppingCartTest {
     void setup() {
         fiveQuantity = 5;
         doveProductName = "Dove Soap";
-        doveUnitPrice = "39.99";
 
-        dovePrice = new BigDecimal(doveUnitPrice);
-        doveSoap = new Product(doveProductName, dovePrice, SOAP);
+        BigDecimal salesTaxPercentage = new BigDecimal("12.5");
+
+        Tax salesTax = new Tax(SALES, salesTaxPercentage);
+        BigDecimal unitPrice = new BigDecimal("39.99");
+
+        price = new Price(unitPrice, salesTax);
+
+        doveSoap = new Product(doveProductName, price, SOAP);
         actualCart = new ShoppingCart();
 
-        expectedShoppingCartWithFiveDove = getShoppingCart(doveProductName, fiveQuantity, doveUnitPrice);
+        expectedShoppingCartWithFiveDove = getShoppingCart(doveProductName, fiveQuantity, price);
     }
 
     @AfterEach
     void tearDown() {
+        price = null;
         fiveQuantity = 0;
         doveProductName = null;
-        doveUnitPrice = null;
-
-        dovePrice = null;
         doveSoap = null;
         actualCart = null;
-
         expectedShoppingCartWithFiveDove = null;
     }
 
@@ -103,11 +105,11 @@ class ShoppingCartTest {
         assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
     }
 
-    private ShoppingCart getShoppingCart(String name, int quantity, String unitPrice) {
+    private ShoppingCart getShoppingCart(String name, int quantity, Price price) {
 
         // Create a cart with given name, quantity and unit-price of soap
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product product = new Product(name, new BigDecimal(unitPrice), SOAP);
+        Product product = new Product(name, price, SOAP);
         shoppingCart.addProduct(product, quantity);
 
         return shoppingCart;

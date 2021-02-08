@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class Product {
     private final String name;
-    private final BigDecimal unitPrice;
+    private final Price price;
     private final ProductType type;
 
-    public Product(String name, BigDecimal unitPrice, ProductType type) {
+    public Product(String name, Price price, ProductType type) {
         this.name = name;
-        this.unitPrice = unitPrice;
+        this.price = price;
         this.type = type;
     }
 
@@ -20,16 +20,16 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return name.equals(product.name)
-                && unitPrice.equals(product.unitPrice)
+                && price.equals(product.price)
                 && type == product.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, unitPrice, type);
+        return Objects.hash(name, price, type);
     }
 
     BigDecimal getUnitPrice() {
-        return unitPrice;
+        return price.getUnitPrice();
     }
 }
