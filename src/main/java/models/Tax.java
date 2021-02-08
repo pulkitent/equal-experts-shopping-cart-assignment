@@ -1,6 +1,7 @@
 package models;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Tax {
     private final TaxType type;
@@ -13,5 +14,18 @@ public class Tax {
 
     public BigDecimal getTaxPercentage() {
         return taxPercentage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tax tax = (Tax) o;
+        return type == tax.type && taxPercentage.equals(tax.taxPercentage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, taxPercentage);
     }
 }
