@@ -90,11 +90,11 @@ class ShoppingCartTest {
         //Arrange
         ShoppingCart cartWithTwoDoveAndTwoAxe = new ShoppingCart();
 
-        int twoDoveQuantity = 2;
         String percentage = "12.5";
         BigDecimal taxPercentage = new BigDecimal(percentage);
         Tax tax = new Tax(SALES, taxPercentage);
 
+        int twoDoveQuantity = 2;
         String doveUnitPrice = "39.99";
         BigDecimal dovePrice = new BigDecimal(doveUnitPrice);
         Price price = new Price(dovePrice, tax);

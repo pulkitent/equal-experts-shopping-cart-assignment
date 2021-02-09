@@ -72,9 +72,7 @@ class UserTest {
     void shouldAddFiveAndThreeDoveSoapsToCartByUser() {
         // Arrange
         int threeQuantity = 3;
-        BigDecimal expectedTotalCartPrice = new BigDecimal("359.92");
         expectedShoppingCartWithFiveDove.addProduct(doveSoap, threeQuantity);
-        ShoppingCart expectedShoppingCartWithEightDove = expectedShoppingCartWithFiveDove;
 
         // Action
         user.addProductToCart(doveSoap, fiveQuantity);
