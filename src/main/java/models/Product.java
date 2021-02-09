@@ -19,9 +19,7 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return name.equals(product.name)
-                && price.equals(product.price)
-                && type == product.type;
+        return name.equals(product.name) && price.equals(product.price) && type == product.type;
     }
 
     @Override
