@@ -70,6 +70,7 @@ class ShoppingCartTest {
 
         ShoppingCart expectedCartWithTwoDoveAndTwoAxe = getExpectedCartWithTwoDovesAndTwoAxe();
         BigDecimal expectedTotalCartPrice = new BigDecimal("314.96");
+        BigDecimal expectedTotalCartTax = new BigDecimal("35.00");
 
         //Action
         cartWithTwoDoveAndTwoAxe.addProduct(dove, twoDoveQuantity);
@@ -79,6 +80,7 @@ class ShoppingCartTest {
         /* verifies cart has 8 dove soaps with unit price 39.99 each by using equals and hashcode contract*/
         assertThat(cartWithTwoDoveAndTwoAxe, is(expectedCartWithTwoDoveAndTwoAxe));
         assertThat(cartWithTwoDoveAndTwoAxe.getTotalPrice(), is(expectedTotalCartPrice));
+        assertThat(cartWithTwoDoveAndTwoAxe.getTotalTaxOnCart(), is(expectedTotalCartTax));
     }
 
     @Test
