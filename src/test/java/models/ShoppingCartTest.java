@@ -45,6 +45,7 @@ class ShoppingCartTest {
         fiveQuantity = 0;
         doveProductName = null;
         doveSoap = null;
+        price = null;
         actualCart = null;
         expectedShoppingCartWithFiveDove = null;
     }

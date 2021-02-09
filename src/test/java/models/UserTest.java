@@ -17,6 +17,7 @@ class UserTest {
     private Product doveSoap;
     private ShoppingCart actualCart;
     private User user;
+    private User expectedUser;
     private ShoppingCart expectedShoppingCartWithFiveDove;
     private Price price;
 
@@ -38,7 +39,8 @@ class UserTest {
         actualCart = new ShoppingCart();
         user = new User(actualCart);
 
-        expectedShoppingCartWithFiveDove = getExpectedCart(doveProductName, fiveQuantity, doveUnitPrice);
+        expectedShoppingCartWithFiveDove = getExpectedCart(doveProductName, fiveQuantity);
+        expectedUser = new User(expectedShoppingCartWithFiveDove);
     }
 
     @BeforeEach
@@ -48,10 +50,12 @@ class UserTest {
         actualCart = null;
         user = null;
         expectedShoppingCartWithFiveDove = null;
+        price = null;
+        expectedUser = null;
     }
 
     @Test
-    @DisplayName("Should assert two shopping cart with 5 dove soaps with same unit price and same total price")
+    @DisplayName("Should assert two users with carts having 5 dove soaps with same unit price and same total price")
     void shouldAddFiveDoveSoapsToCartByUser() {
         //Arrange
         BigDecimal expectedTotalCartPrice = new BigDecimal("224.95");
@@ -60,13 +64,11 @@ class UserTest {
         user.addProductToCart(doveSoap, fiveQuantity);
 
         // Assert
-        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
-        /* verifies cart has 5 dove soaps with unit price 39.99 each by using equals and hashcode contract*/
-        assertThat(actualCart, is(expectedShoppingCartWithFiveDove));
+        assertThat(user, is(expectedUser));
     }
 
     @Test
-    @DisplayName("Should assert two shopping cart with 8 dove soaps and same unit price and same total price")
+    @DisplayName("Should assert two users with shopping cart having 8 dove soaps with same unit price and same total price")
     void shouldAddFiveAndThreeDoveSoapsToCartByUser() {
         // Arrange
         int threeQuantity = 3;
@@ -79,12 +81,10 @@ class UserTest {
         user.addProductToCart(doveSoap, threeQuantity);
 
         // Assert
-        assertThat(actualCart.getTotalPrice(), is(expectedTotalCartPrice));
-        /* verifies cart has 8 dove soaps with unit price 39.99 each by using equals and hashcode contract */
-        assertThat(actualCart, is(expectedShoppingCartWithEightDove));
+        assertThat(user, is(expectedUser));
     }
 
-    private ShoppingCart getExpectedCart(String name, int quantity, String unitPrice) {
+    private ShoppingCart getExpectedCart(String name, int quantity) {
 
         // Create a cart with given name, quantity and unit-price of soap
         ShoppingCart shoppingCart = new ShoppingCart();
