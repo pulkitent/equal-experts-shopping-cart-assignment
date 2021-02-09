@@ -48,10 +48,9 @@ public class ShoppingCart {
     }
 
     private void calculateTotalPrice() {
-        //Reset cart total value every time to calculate total value from start
+        //Reset cart total value & total tax every time to calculate total value from start
         this.totalPrice = new BigDecimal("0.0");
-
-        this.totalTaxAmount = new BigDecimal("0.00");
+        this.totalTaxAmount = new BigDecimal("0.0");
 
         for (Product product : products) {
             this.totalTaxAmount = totalTaxAmount.add(product.getTaxAmountOnProduct());
@@ -59,6 +58,11 @@ public class ShoppingCart {
             totalPrice = totalPrice.add(priceWithTax);
         }
 
-        this.totalPrice = totalPrice.setScale(PRECISION, ROUND_HALF_UP);
+        this.totalTaxAmount = roundOffUptoTwoDecimalPlaces(this.totalTaxAmount);
+        this.totalPrice = roundOffUptoTwoDecimalPlaces(totalPrice);
+    }
+
+    private BigDecimal roundOffUptoTwoDecimalPlaces(BigDecimal amount) {
+        return amount.setScale(PRECISION, ROUND_HALF_UP);
     }
 }
