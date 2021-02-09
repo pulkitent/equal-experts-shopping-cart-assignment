@@ -10,6 +10,7 @@ import static java.math.BigDecimal.ROUND_HALF_UP;
 public class ShoppingCart {
     private final List<Product> products;
     private BigDecimal totalPrice;
+    private BigDecimal totalTaxAmount;
 
     private static final Integer PRECISION = 2;
 
@@ -42,11 +43,18 @@ public class ShoppingCart {
         return Objects.hash(products, totalPrice);
     }
 
+    public BigDecimal getTotalTaxOnCart() {
+        return this.totalTaxAmount;
+    }
+
     private void calculateTotalPrice() {
         //Reset cart total value every time to calculate total value from start
         this.totalPrice = new BigDecimal("0.0");
 
+        this.totalTaxAmount = new BigDecimal("0.00");
+
         for (Product product : products) {
+            totalTaxAmount.add(product.getTaxAmountOnProduct());
             BigDecimal priceWithTax = product.getProductPriceWithTax();
             totalPrice = totalPrice.add(priceWithTax);
         }

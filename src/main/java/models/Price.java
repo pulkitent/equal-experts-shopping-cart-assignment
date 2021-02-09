@@ -18,8 +18,7 @@ public class Price {
     }
 
     public BigDecimal getPriceWithTax() {
-        BigDecimal taxPercentage = tax.getTaxPercentage();
-        BigDecimal taxAmount = unitPrice.multiply(taxPercentage).divide(HUNDRED);
+        BigDecimal taxAmount = getTaxAmountOnUnitPrice();
 
         BigDecimal priceWithTax = unitPrice.add(taxAmount);
 
@@ -41,5 +40,15 @@ public class Price {
 
     BigDecimal getUnitPrice() {
         return unitPrice;
+    }
+
+    Tax getTax() {
+        return tax;
+    }
+
+    BigDecimal getTaxAmountOnUnitPrice() {
+        BigDecimal taxPercentage = tax.getTaxPercentage();
+        BigDecimal taxAmount = unitPrice.multiply(taxPercentage).divide(HUNDRED);
+        return taxAmount;
     }
 }
