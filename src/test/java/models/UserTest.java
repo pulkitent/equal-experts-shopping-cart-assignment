@@ -31,7 +31,7 @@ class UserTest {
         BigDecimal salesTaxPercentage = new BigDecimal("12.5");
 
         Tax salesTax = new Tax(SALES, salesTaxPercentage);
-        BigDecimal unitPrice = new BigDecimal("39.99");
+        BigDecimal unitPrice = new BigDecimal(doveUnitPrice);
 
         price = new Price(unitPrice, salesTax);
 
@@ -80,6 +80,16 @@ class UserTest {
 
         // Assert
         assertThat(user, is(expectedUser));
+    }
+
+    @Test
+    @DisplayName("Should check equality of two equal users")
+    void shouldTestEquals() {
+        //Action
+        user.addProductToCart(doveSoap, fiveQuantity);
+
+        //Assert
+        assertThat(user.equals(expectedUser), is(true));
     }
 
     private ShoppingCart getExpectedCart(String name, int quantity) {
