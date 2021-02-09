@@ -54,7 +54,7 @@ public class ShoppingCart {
         this.totalTaxAmount = new BigDecimal("0.00");
 
         for (Product product : products) {
-            totalTaxAmount.add(product.getTaxAmountOnProduct());
+            this.totalTaxAmount = totalTaxAmount.add(product.getTaxAmountOnProduct());
             BigDecimal priceWithTax = product.getProductPriceWithTax();
             totalPrice = totalPrice.add(priceWithTax);
         }

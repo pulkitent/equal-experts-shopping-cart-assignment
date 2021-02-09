@@ -48,6 +48,7 @@ public class Price {
 
     BigDecimal getTaxAmountOnUnitPrice() {
         BigDecimal taxPercentage = tax.getTaxPercentage();
+
         BigDecimal taxAmount = unitPrice.multiply(taxPercentage).divide(HUNDRED);
         return taxAmount;
     }
