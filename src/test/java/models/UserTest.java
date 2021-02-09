@@ -15,27 +15,33 @@ class UserTest {
 
     private int fiveQuantity;
     private Product doveSoap;
+    private Product axeDeo;
     private ShoppingCart actualCart;
+    private ShoppingCart expectedShoppingCartWithFiveDove;
     private User user;
     private User expectedUser;
-    private ShoppingCart expectedShoppingCartWithFiveDove;
-    private Price price;
+    private Price dovePrice;
 
     @BeforeEach
     void setup() {
         // Arrange
+        BigDecimal salesTaxPercentage = new BigDecimal("12.5");
+        Tax salesTax = new Tax(SALES, salesTaxPercentage);
+
         fiveQuantity = 5;
+
         String doveProductName = "Dove Soap";
         String doveUnitPrice = "39.99";
-
-        BigDecimal salesTaxPercentage = new BigDecimal("12.5");
-
-        Tax salesTax = new Tax(SALES, salesTaxPercentage);
         BigDecimal unitPrice = new BigDecimal(doveUnitPrice);
+        dovePrice = new Price(unitPrice, salesTax);
+        doveSoap = new Product(doveProductName, dovePrice, SOAP);
 
-        price = new Price(unitPrice, salesTax);
+        String axeProductName = "Axe Deo";
+        String axeUnitPrice = "99.99";
+        BigDecimal anotherUnitPrice = new BigDecimal(axeUnitPrice);
+        Price axePrice = new Price(anotherUnitPrice, salesTax);
+        axeDeo = new Product(axeProductName, axePrice, SOAP);
 
-        doveSoap = new Product(doveProductName, price, SOAP);
         actualCart = new ShoppingCart();
         user = new User(actualCart);
 
@@ -50,7 +56,7 @@ class UserTest {
         actualCart = null;
         user = null;
         expectedShoppingCartWithFiveDove = null;
-        price = null;
+        dovePrice = null;
         expectedUser = null;
     }
 
@@ -83,6 +89,36 @@ class UserTest {
     }
 
     @Test
+    @DisplayName("Should assert two shopping cart with 2 dove soaps and 2 axe deo")
+    void shouldAddTwoDoveSoapsAndTwoAxeDeoProductsToACart() {
+        //Arrange
+        int twoQuantity = 2;
+        ShoppingCart actualCartWithTwoDoveAndTwoAxe = new ShoppingCart();
+        User actualUser = new User(actualCartWithTwoDoveAndTwoAxe);
+
+        User expectedUser = getExpectedUserWithCarHavingTwoDoveAndTwoAxe();
+
+        //Action
+        actualUser.addProductToCart(doveSoap, twoQuantity);
+        actualUser.addProductToCart(axeDeo, twoQuantity);
+
+        //Assert
+        assertThat(actualUser, is(expectedUser));
+    }
+
+    private User getExpectedUserWithCarHavingTwoDoveAndTwoAxe() {
+        int expectedTwoQuantity = 2;
+
+        ShoppingCart expectedShoppingCartWithTwoDoveAndTwoAxe = new ShoppingCart();
+        User expectedUser = new User(expectedShoppingCartWithTwoDoveAndTwoAxe);
+
+        expectedUser.addProductToCart(doveSoap, expectedTwoQuantity);
+        expectedUser.addProductToCart(axeDeo, expectedTwoQuantity);
+
+        return expectedUser;
+    }
+
+    @Test
     @DisplayName("Should check equality of two equal users")
     void shouldTestEquals() {
         //Action
@@ -96,7 +132,7 @@ class UserTest {
 
         // Create a cart with given name, quantity and unit-price of soap
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product product = new Product(name, price, SOAP);
+        Product product = new Product(name, dovePrice, SOAP);
         shoppingCart.addProduct(product, quantity);
 
         return shoppingCart;
