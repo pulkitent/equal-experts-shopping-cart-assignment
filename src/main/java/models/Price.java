@@ -4,13 +4,14 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
+import static models.Constants.HUNDERED;
+import static models.Constants.PRECISION;
 
 public class Price {
     private final BigDecimal unitPrice;
     private final Tax tax;
 
-    private static final BigDecimal HUNDRED = new BigDecimal("100");
-    private static final Integer PRECISION = 2;
+    private static final BigDecimal HUNDRED = new BigDecimal(HUNDERED);
 
     public Price(BigDecimal unitPrice, Tax tax) {
         this.unitPrice = unitPrice;
@@ -40,10 +41,6 @@ public class Price {
 
     BigDecimal getUnitPrice() {
         return unitPrice;
-    }
-
-    Tax getTax() {
-        return tax;
     }
 
     BigDecimal getTaxAmountOnUnitPrice() {

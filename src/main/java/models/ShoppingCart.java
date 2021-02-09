@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Objects;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
+import static models.Constants.PRECISION;
+import static models.Constants.ZERO;
 
 public class ShoppingCart {
     private final List<Product> products;
     private BigDecimal totalPrice;
     private BigDecimal totalTaxAmount;
 
-    private static final Integer PRECISION = 2;
-
     public ShoppingCart() {
         this.products = new LinkedList<>();
-        this.totalPrice = new BigDecimal("0");
+        this.totalPrice = new BigDecimal(ZERO);
     }
 
     public void addProduct(Product product, int quantity) {
@@ -28,6 +28,10 @@ public class ShoppingCart {
 
     public BigDecimal getTotalPrice() {
         return totalPrice;
+    }
+
+    public BigDecimal getTotalTaxOnCart() {
+        return this.totalTaxAmount;
     }
 
     @Override
@@ -43,14 +47,10 @@ public class ShoppingCart {
         return Objects.hash(products, totalPrice);
     }
 
-    public BigDecimal getTotalTaxOnCart() {
-        return this.totalTaxAmount;
-    }
-
     private void calculateTotalPrice() {
         //Reset cart total value & total tax every time to calculate total value from start
-        this.totalPrice = new BigDecimal("0.0");
-        this.totalTaxAmount = new BigDecimal("0.0");
+        this.totalPrice = new BigDecimal(ZERO);
+        this.totalTaxAmount = new BigDecimal(ZERO);
 
         for (Product product : products) {
             this.totalTaxAmount = totalTaxAmount.add(product.getTaxAmountOnProduct());
