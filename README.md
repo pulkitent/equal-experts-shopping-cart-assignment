@@ -1,6 +1,8 @@
 # equal-experts-shopping-cart-assignment
 Equal Experts shopping cart (code pairing or machine coding round) assignment
 
+for problem statememnt click this (check pdf here) - https://github.com/pulkitent/equal-experts-shopping-cart-assignment/blob/main/Problem%20Statement.pdf
+
 # Version Number
 72cf4fe47f85c39779267d0ecee07655a354e623
 
