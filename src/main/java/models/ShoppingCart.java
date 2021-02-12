@@ -1,28 +1,34 @@
 package models;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
 import static models.Constants.PRECISION;
 import static models.Constants.ZERO;
 
 public class ShoppingCart {
-    private final List<Product> products;
+    private final List<ShoppingCartItem> shoppingCartItems;
     private BigDecimal totalPrice;
     private BigDecimal totalTaxAmount;
 
     public ShoppingCart() {
-        this.products = new LinkedList<>();
+        this.shoppingCartItems = new LinkedList<>();
         this.totalPrice = new BigDecimal(ZERO);
     }
 
     public void addProduct(Product product, int quantity) {
-        for (int index = 0; index < quantity; index++) {
-            products.add(product);
+        for (ShoppingCartItem item : shoppingCartItems) {
+            if (item.isSameProduct(product)) {
+                item.increaseQuantityBy(quantity);
+                calculateTotalPrice();
+                return;
+            }
         }
+
+        ShoppingCartItem shoppingCartItem = new ShoppingCartItem(product, quantity);
+        shoppingCartItems.add(shoppingCartItem);
+
         calculateTotalPrice();
     }
 
@@ -39,12 +45,12 @@ public class ShoppingCart {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ShoppingCart that = (ShoppingCart) o;
-        return products.equals(that.products) && totalPrice.equals(that.totalPrice);
+        return shoppingCartItems.equals(that.shoppingCartItems) && totalPrice.equals(that.totalPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(products, totalPrice);
+        return Objects.hash(shoppingCartItems, totalPrice);
     }
 
     private void calculateTotalPrice() {
@@ -52,9 +58,10 @@ public class ShoppingCart {
         this.totalPrice = new BigDecimal(ZERO);
         this.totalTaxAmount = new BigDecimal(ZERO);
 
-        for (Product product : products) {
-            this.totalTaxAmount = totalTaxAmount.add(product.getTaxAmountOnProduct());
-            BigDecimal priceWithTax = product.getProductPriceWithTax();
+        for (ShoppingCartItem item : shoppingCartItems) {
+            this.totalTaxAmount = totalTaxAmount.add(item.getTaxAmountOnItem());
+
+            BigDecimal priceWithTax = item.getItemPriceWithTax();
             totalPrice = totalPrice.add(priceWithTax);
         }
 

@@ -5,7 +5,11 @@ public class Constants {
         //To stop from being instantiated
     }
 
-    static final Integer PRECISION = 2;
-    static final String ZERO = "0.0";
-    static final String HUNDERED = "100";
+    public static final Integer PRECISION = 2;
+    public static final String ZERO = "0.0";
+    public static final String HUNDERED = "100";
+    public static final String TAX_PERCENTAGE = "12.5";
+    public static final String SALES = "SALES";
+    public static final String SOAP = "SOAP";
+    public static final String DEO = "DEO";
 }

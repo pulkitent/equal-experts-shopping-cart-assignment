@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static models.ProductType.SOAP;
-import static models.TaxType.SALES;
+import static models.Constants.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -143,14 +142,14 @@ class ShoppingCartTest {
     }
 
     private Product getDoveSoapProductWithTax() {
-        BigDecimal salesTaxPercentage = new BigDecimal("12.5");
+        BigDecimal salesTaxPercentage = new BigDecimal(TAX_PERCENTAGE);
         Tax salesTax = new Tax(SALES, salesTaxPercentage);
 
         return getDoveSoapProduct(salesTax);
     }
 
     private Product getAxeDeoProductWithTax() {
-        BigDecimal salesTaxPercentage = new BigDecimal("12.5");
+        BigDecimal salesTaxPercentage = new BigDecimal(TAX_PERCENTAGE);
         Tax salesTax = new Tax(SALES, salesTaxPercentage);
 
         return getAxeDeoProduct(salesTax);
@@ -161,7 +160,7 @@ class ShoppingCartTest {
         BigDecimal axePrice = new BigDecimal(axeUnitPrice);
         Price anotherPrice = new Price(axePrice, tax);
 
-        return new Product("Axe Deo", anotherPrice, SOAP);
+        return new Product("Axe Deo", anotherPrice, DEO);
     }
 
     private Product getDoveSoapProduct(Tax tax) {
@@ -173,7 +172,7 @@ class ShoppingCartTest {
     }
 
     private Tax getTax() {
-        String percentage = "12.5";
+        String percentage = TAX_PERCENTAGE;
         BigDecimal taxPercentage = new BigDecimal(percentage);
         return new Tax(SALES, taxPercentage);
     }

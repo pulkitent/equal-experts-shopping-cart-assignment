@@ -20,7 +20,6 @@ public class Price {
 
     public BigDecimal getPriceWithTax() {
         BigDecimal taxAmount = getTaxAmountOnUnitPrice();
-
         BigDecimal priceWithTax = unitPrice.add(taxAmount);
 
         return priceWithTax.setScale(PRECISION, ROUND_HALF_UP);

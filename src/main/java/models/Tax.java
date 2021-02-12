@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Tax {
-    private final TaxType type;
+    private final String type;
     private final BigDecimal taxPercentage;
 
-    public Tax(TaxType type, BigDecimal taxPercentage) {
+    public Tax(String type, BigDecimal taxPercentage) {
         this.type = type;
         this.taxPercentage = taxPercentage;
     }
@@ -21,7 +21,7 @@ public class Tax {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tax tax = (Tax) o;
-        return type == tax.type && taxPercentage.equals(tax.taxPercentage);
+        return type.equals(tax.type) && taxPercentage.equals(tax.taxPercentage);
     }
 
     @Override

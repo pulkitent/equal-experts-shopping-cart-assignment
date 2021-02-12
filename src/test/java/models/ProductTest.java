@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static models.ProductType.SOAP;
-import static models.TaxType.SALES;
+import static models.Constants.SALES;
+import static models.Constants.SOAP;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -30,6 +30,7 @@ class ProductTest {
 
         price = new Price(unitPrice, salesTax);
         productName = "Dove Soap";
+
 
         actualProduct = new Product(productName, price, SOAP);
         expectedProduct = new Product(productName, price, SOAP);

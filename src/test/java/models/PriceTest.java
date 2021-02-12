@@ -5,14 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static models.ProductType.SOAP;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 import java.math.BigDecimal;
 
-import static models.TaxType.SALES;
-import static org.junit.jupiter.api.Assertions.*;
+import static models.Constants.SALES;
+import static models.Constants.TAX_PERCENTAGE;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 class PriceTest {
     private BigDecimal salesPercentage;
@@ -22,7 +20,8 @@ class PriceTest {
 
     @BeforeEach
     void setup() {
-        salesPercentage = new BigDecimal("12.5");
+
+        salesPercentage = new BigDecimal(TAX_PERCENTAGE);
         salesTax = new Tax(SALES, salesPercentage);
         unitPrice = new BigDecimal("100.00");
         price = new Price(unitPrice, salesTax);
